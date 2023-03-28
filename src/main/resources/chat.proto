@@ -1,0 +1,22 @@
+syntax= "proto3";
+option java_package="ma.enset.stubs";  //to specify where we gonna add the class
+service ChatService{
+    rpc fullStream(stream Message ) returns (stream Message);   //Bidirectional streaming model
+    }
+message Message{
+    string messageFrom=1;
+    string messageTo=2;
+    string content=3;
+}
+
+
+
+
+
+
+
+
+
+
+
+
