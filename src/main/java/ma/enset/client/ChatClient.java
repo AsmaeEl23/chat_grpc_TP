@@ -17,7 +17,7 @@ public class ChatClient {
         ChatServiceGrpc.ChatServiceStub asyncStub = ChatServiceGrpc.newStub(managedChannel);
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter your name : ");
-        String clientName= sc.next();
+        String clientName= sc.nextLine();
         System.out.println(clientName+" connected ....");
 
         StreamObserver<Chat.Message> send = asyncStub.fullStream(new StreamObserver<Chat.Message>() {
@@ -39,12 +39,18 @@ public class ChatClient {
                 System.out.println("End......!");
             }
         });
+        Chat.Message req=Chat.Message.newBuilder()
+                .setMessageFrom(clientName)
+                .setMessageTo("")
+                .setContent("")
+                .build();
+        send.onNext(req);
         while (true){
             System.out.println("===================");
-            System.out.println("Send to : ");
-            String to=sc.next();
             System.out.println("Message : ");
-            String message=sc.next();
+            String message=sc.nextLine();
+            System.out.println("Send to : ");
+            String to=sc.nextLine();
             Chat.Message request=Chat.Message.newBuilder()
                     .setMessageFrom(clientName)
                     .setMessageTo(to)

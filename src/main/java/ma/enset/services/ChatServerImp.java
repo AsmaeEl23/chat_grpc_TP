@@ -18,14 +18,8 @@ public class ChatServerImp extends ChatServiceGrpc.ChatServiceImplBase {
                if(!clients.containsKey(messageFrom)){
                    clients.put(messageFrom,responseObserver);
                }
-               if(messageTo.isEmpty()){
-                   for(String c:clients.keySet()){
-                       if(!c.equals(messageFrom)){
-                           clients.get(c).onNext(message);
-                       }
-                   }
-               }
-               else if (clients.containsKey(messageTo)){
+
+               if (clients.containsKey(messageTo) && !messageTo.equals("")){
                    StreamObserver<Chat.Message> messageStreamObserver= clients.get(messageTo);
                    messageStreamObserver.onNext(message);
                }
